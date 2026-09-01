@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <title>Portfolio - Gustavo C. Schimidt</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" class="alternate-style" title="pink" href="css/skins/pink.css" type="text/css">
+  <link rel="stylesheet" class="alternate-style" title="blue" href="css/skins/blue.css" type="text/css" disabled>
+  <link rel="stylesheet" class="alternate-style" title="green" href="css/skins/green.css" type="text/css" disabled>
+  <link rel="stylesheet" class="alternate-style" title="orange" href="css/skins/orange.css" type="text/css" disabled>
+  <link rel="stylesheet" class="alternate-style" title="yellow" href="css/skins/yellow.css" type="text/css" disabled>
+  <link rel="stylesheet" href="css/styleSwitcher.css" type="text/css">
+
+  <style>
+    /* ===================== LAYOUT DOS ITENS (TIMELINE) ===================== */
+    .timeline-item .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 6px 15px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item .timeline-header .timeline-title-group {
+      flex: 1 1 auto;
+      min-width: 180px;
+    }
+
+    .timeline-item .timeline-header .timeline-title-group .timeline-title {
+      margin-bottom: 2px;
+    }
+
+    .timeline-item .timeline-date {
+      margin: 0;
+      white-space: nowrap;
+      flex: 0 0 auto;
+      opacity: 0.8;
+    }
+
+    .timeline-item .timeline-list {
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+      color: #504e70;
+    }
+
+    .timeline-item .timeline-list li {
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
+    .timeline-item .timeline-subtitle {
+      display: block;
+      font-weight: 600;
+      opacity: 0.85;
+      margin-bottom: 8px;
+      color: #302e4d;
+    }
+
+    /* ===================== CERTIFICAÇÕES E CURSOS ===================== */
+    .cert-group-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 10px;
+      color: #302e4d;
+    }
+
+    .cert-group-title:first-child {
+      margin-top: 0;
+    }
+
+    .course-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .course-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #e8dfec;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      color: #504e70;
+    }
+
+    .course-list li:last-child {
+      border-bottom: none;
+    }
+
+    .course-list li i {
+      opacity: 0.7;
+      flex: 0 0 auto;
+    }
+
+    /* ===================== FORMULÁRIO DE CONTATO ===================== */
+    .send-options {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    /* Os botões de envio (Email/WhatsApp) usam a MESMA cor do tema ativo
+       (herdada da regra .btn definida em pink.css/blue.css/green.css/etc.),
+       por isso não sobrescrevemos background-color aqui. */
+    .send-options .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .form-control.is-invalid {
+      border-color: #e74c3c !important;
+    }
+
+    .field-error {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .field-error.show {
+      display: block;
+    }
+
+    /* ===================== PORTFOLIO - PROJETOS REAIS ===================== */
+    .portfolio-item-inner.client-project {
+      position: relative;
+    }
+
+    .portfolio-item-inner.client-project .portfolio-info p {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 4px;
+      line-height: 1.4;
+      color: #ffffff;
+    }
+
+    .portfolio-item-inner.client-project .icon-link {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      position: relative;
+      z-index: 2;
+      color: #302e4d;
+    }
+
+    .client-project-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: block;
+    }
+
+    /* ========================================================================
+       MODO ESCURO — cobre os elementos que eu adicionei e que o template
+       original (styleSwitcher.css) não conhecia.
+       ======================================================================== */
+    body.dark .timeline-item .timeline-list,
+    body.dark .cert-group-title,
+    body.dark .course-list li {
+      color: #e9e9e9;
+    }
+
+    body.dark .timeline-item .timeline-subtitle {
+      color: #ffffff;
+    }
+
+    body.dark .course-list li {
+      border-bottom-color: #393939;
+    }
+
+    body.dark .field-error {
+      color: #ff6b6b;
+    }
+
+    body.dark .form-control.is-invalid {
+      border-color: #ff6b6b !important;
+    }
+
+    /* ===================== RESPONSIVIDADE EXTRA ===================== */
+
+    @media (max-width: 900px) {
+
+      .about .about-content .personal-info,
+      .about .about-content .education,
+      .about .about-content .experience {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .home .intro img {
+        height: 150px;
+        width: 150px;
+      }
+
+      .home .intro h1 {
+        font-size: 24px;
+      }
+
+      .section-title h2 {
+        font-size: 28px;
+      }
+
+      .about .about-content .personal-info .buttons .btn {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+      }
+
+      .send-options {
+        flex-direction: column;
+      }
+
+      .send-options .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .course-list li {
+        font-size: 14px;
+      }
+
+      .timeline-item .timeline-title {
+        font-size: 16px;
+      }
+
+      .timeline-item .timeline-date {
+        font-size: 13px;
+      }
+
+      .cert-group-title {
+        font-size: 15px;
+      }
+
+      .contact .contact-info-item {
+        margin-bottom: 25px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .home .intro img {
+        height: 120px;
+        width: 120px;
+      }
+
+      .about .about-content .about-text h3 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Container Principal -->
+  <div class="main-container">
+    <!-- Menu Lateral -->
+    <div class="aside">
+      <div class="nav-toggler">
+        <span></span>
+      </div>
+      <div class="aside-inner">
+        <div class="logo">
+          <a href="#">Gustavo</a>
+        </div>
+        <ul class="nav">
+          <li><a href="#home" class="active"><i class="fa fa-home"></i> Inicio</a></li>
+          <li><a href="#about"><i class="fa fa-user"></i> Sobre</a></li>
+          <li><a href="#portfolio"><i class="fa fa-briefcase"></i> Portfolio</a></li>
+          <li><a href="#contact"><i class="fa fa-comments"></i> Contato</a></li>
+        </ul>
+        <div class="copyright-text">
+          &copy; 2025 Gustavo C. Schimidt
+        </div>
+      </div>
+    </div>
+    <!-- Fim do Menu Lateral -->
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+
+      <!-- Seção Início -->
+      <section class="home section active" id="home">
+        <div class="container">
+          <div class="intro">
+            <img src="images/about.jpg" alt="Gustavo C. Schimidt" class="shadow-dark">
+            <h1>Gustavo C. Schimidt</h1>
+            <span class="iTyped"></span>
+            <div class="social-links">
+              <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+              <a href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://open.spotify.com/user/31dllaxcb3b2aamjjfqujahtvtpe?si=5e57d93d9fe444fb" target="_blank"
+                rel="noopener noreferrer"><i class="fab fa-spotify"></i></a>
+              <a href="https://www.instagram.com/gu.coelhoo/" target="_blank" rel="noopener noreferrer"><i
+                  class="fab fa-instagram"></i></a>
+              <a href="https://www.linkedin.com/in/gustavo-coelho-schimidt-286311214/" target="_blank"
+                rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Fim da Seção Início -->
+
+      <!-- About Section -->
+      <section class="about section" id="about">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Sobre mim</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="about-content padd-15">
+              <div class="row">
+                <div class="about-text padd-15">
+                  <h3>Sou Gustavo C. Schimidt e <span>Desenvolvedor de Software</span></h3>
+                  <p>Desenvolvedor de Software com experiência no desenvolvimento e manutenção de sistemas
+                    corporativos para gestão pública, atuando com LSP (Senior Sistemas), SQL Server e implementação
+                    de regras de negócio complexas. Possui vivência na criação de funcionalidades, relatórios,
+                    otimização de consultas e suporte a ambientes produtivos. Também desenvolve aplicações web
+                    modernas utilizando Next.js, React e TypeScript, com integração de APIs, autenticação, bancos de
+                    dados e meios de pagamento. Atualmente cursa Especialização em Tecnologia Java e participou de
+                    capacitação corporativa em Java e Spring Boot, aplicando conceitos de APIs REST, arquitetura em
+                    camadas e boas práticas de desenvolvimento backend.</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="personal-info padd-15">
+                  <div class="row">
+                    <div class="info-item padd-15">
+                      <p>Data de nascimento : <span>23 Abril 2002</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Idade : <span>24</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Email : <span>gustavocs.dev@gmail.com</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Telefone : <span>+55 (47) 99172-5626</span></p>
+                    </div>
+                    <div class="info-item padd-15">
+                      <p>Cidade : <span>Blumenau</span></p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="buttons padd-15">
+                      <a href="documents/GustavoCoelhoSchimidt_CV.pdf" download class="btn">Download CV</a>
+                      <a href="#contact" id="hireMeBtn" class="btn hire-me">Contrate-me</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="education padd-15">
+                  <h3 class="title">Educação</h3>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <div class="timeline shadow-dark">
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Especialização Em Tecnologia Java</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2025 - 2026</h6>
+                          </div>
+                          <p class="timeline-text">Universidade Tecnológica Federal do Paraná (UTFPR)</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Análise E Desenvolvimento De Sistemas</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2022 - 2024</h6>
+                          </div>
+                          <p class="timeline-text">Centro Universitário UniSociesc</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Ensino Médio</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2019 - 2021</h6>
+                          </div>
+                          <p class="timeline-text">E.E.B Hercílio Deeke</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="experience padd-15">
+                  <h3 class="title">Experiência</h3>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <div class="timeline shadow-dark">
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Desenvolvedor Full Stack</h4>
+                              <span class="timeline-subtitle">Freelance</span>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2026 - Presente</h6>
+                          </div>
+                          <ul class="timeline-list">
+                            <li>Desenvolvimento de aplicações web, websites institucionais e landing pages
+                              utilizando Next.js, React, TypeScript e Tailwind CSS.</li>
+                            <li>Criação de interfaces modernas, responsivas e interativas, com foco em UI/UX,
+                              animações e navegação intuitiva.</li>
+                            <li>Implementação de estratégias de SEO, otimização de performance e boas práticas para
+                              indexação nos mecanismos de busca.</li>
+                            <li>Integração com APIs REST, autenticação de usuários com Supabase e Firebase, e
+                              manipulação de banco de dados relacional.</li>
+                            <li>Integração de meios de pagamento (Stripe e Mercado Pago), formulários, WhatsApp e
+                              demais serviços externos.</li>
+                            <li>Publicação, manutenção e monitoramento de aplicações utilizando Vercel, Git e
+                              práticas de CI/CD.</li>
+                          </ul>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Desenvolvedor De Sistemas</h4>
+                              <span class="timeline-subtitle">Pública Tecnologia</span>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2023 - 2026</h6>
+                          </div>
+                          <ul class="timeline-list">
+                            <li>Desenvolvimento e manutenção de rotinas críticas em sistemas de gestão pública
+                              utilizados por órgãos públicos.</li>
+                            <li>Implementação de regras de negócio, desenvolvimento de telas (SGI), relatórios e
+                              novas funcionalidades conforme demandas dos clientes.</li>
+                            <li>Análise, correção de bugs e manutenção corretiva e evolutiva, garantindo estabilidade
+                              e evolução dos sistemas.</li>
+                            <li>Desenvolvimento e otimização de consultas SQL Server para suporte às regras de
+                              negócio e melhoria de performance.</li>
+                            <li>Atendimento e análise de demandas registradas no Jira, da investigação até a
+                              validação das soluções.</li>
+                            <li>Utilização de LSP (Senior Sistemas), SQL Server, Git, GitLab, TortoiseSVN e
+                              metodologias ágeis (Scrum e Kanban).</li>
+                            <li>Desenvolvimento de APIs REST com Java e Spring Boot durante capacitação interna.</li>
+                          </ul>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Estagiário De Desenvolvimento</h4>
+                              <span class="timeline-subtitle">Pública Tecnologia</span>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2022 - 2023</h6>
+                          </div>
+                          <ul class="timeline-list">
+                            <li>Desenvolvimento de soluções específicas para atender às necessidades dos clientes da
+                              área de gestão pública/governamental.</li>
+                            <li>Utilização das ferramentas e linguagem nativa da Sênior Sistemas (LSP), junto ao SQL
+                              Server para gerenciamento de banco de dados.</li>
+                          </ul>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Operador De Acabamento</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> 2020 - 2022</h6>
+                          </div>
+                          <ul class="timeline-list">
+                            <li>Responsável pelo funcionamento da rama, com atribuições voltadas à operação e
+                              manutenção da máquina.</li>
+                            <li>Configuração da trama das toalhas.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SEÇÃO: Conquistas e Certificações -->
+              <div class="row">
+                <div class="certifications padd-15">
+                  <h3 class="title">Conquistas e Certificações</h3>
+
+                  <p class="cert-group-title">Certificações Acadêmicas</p>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <div class="timeline shadow-dark">
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Oracle Cloud Infrastructure (OCI)</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Jun 2024</h6>
+                          </div>
+                          <p class="timeline-text">UniFG Centro Universitário</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Inovação, Sustentabilidade e Competitividade Empresarial</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Jul 2024</h6>
+                          </div>
+                          <p class="timeline-text">UniSociesc Centro Universitário</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Sistemas Distribuídos e Mobile</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Dez 2023</h6>
+                          </div>
+                          <p class="timeline-text">UniSociesc Centro Universitário</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Usabilidade, Desenvolvimento Web, Mobile e Jogos</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Dez 2023</h6>
+                          </div>
+                          <p class="timeline-text">UniSociesc Centro Universitário</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Gestão e Qualidade de Software</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Jul 2023</h6>
+                          </div>
+                          <p class="timeline-text">UniSociesc Centro Universitário</p>
+                        </div>
+                        <div class="timeline-item">
+                          <div class="circle-dot"></div>
+                          <div class="timeline-header">
+                            <div class="timeline-title-group">
+                              <h4 class="timeline-title">Modelos, Métodos e Técnicas da Engenharia de Software</h4>
+                            </div>
+                            <h6 class="timeline-date"><i class="fa fa-calendar"></i> Jul 2023</h6>
+                          </div>
+                          <p class="timeline-text">UniSociesc Centro Universitário</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="cert-group-title">Cursos Complementares — ProWay</p>
+                  <div class="row">
+                    <div class="timeline-box padd-15">
+                      <ul class="course-list">
+                        <li><i class="fa fa-certificate"></i> React Native Avançado</li>
+                        <li><i class="fa fa-certificate"></i> React Native Básico</li>
+                        <li><i class="fa fa-certificate"></i> React JS</li>
+                        <li><i class="fa fa-certificate"></i> Trabalhando com NodeJs</li>
+                        <li><i class="fa fa-certificate"></i> Angular</li>
+                        <li><i class="fa fa-certificate"></i> TypeScript</li>
+                        <li><i class="fa fa-certificate"></i> JavaScript Avançado</li>
+                        <li><i class="fa fa-certificate"></i> HTML5/CSS Avançado</li>
+                        <li><i class="fa fa-certificate"></i> Fundamentos C#</li>
+                        <li><i class="fa fa-certificate"></i> Aplicações Web com Python</li>
+                        <li><i class="fa fa-certificate"></i> MySQL</li>
+                        <li><i class="fa fa-certificate"></i> Python Trabalhando com Banco de Dados</li>
+                        <li><i class="fa fa-certificate"></i> Python Fundamentos</li>
+                        <li><i class="fa fa-certificate"></i> JavaScript, jQuery, Ajax</li>
+                        <li><i class="fa fa-certificate"></i> Lógica, Algoritmos, Banco de Dados SQL e Orientação a
+                          Objetos</li>
+                        <li><i class="fa fa-certificate"></i> Trabalhando com UX Design - Módulo de Validação</li>
+                        <li><i class="fa fa-certificate"></i> Utilizando Ferramenta de Prototipação</li>
+                        <li><i class="fa fa-certificate"></i> Trabalhando com UI Design</li>
+                        <li><i class="fa fa-certificate"></i> Trabalhando com UX Design</li>
+                        <li><i class="fa fa-certificate"></i> Fundamentos em CSS3</li>
+                        <li><i class="fa fa-certificate"></i> Fundamentos em HTML5</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- FIM DA SEÇÃO -->
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- About Section End -->
+
+      <!-- Seção Portfolio -->
+      <section class="portfolio section" id="portfolio">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Portfolio</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="portfolio-filter padd-15">
+              <button type="button" class="active" data-filter="all">Todos</button>
+              <button type="button" data-filter="web-development">Desenvolvimento Web</button>
+              <button type="button" data-filter="applications">Aplicações</button>
+            </div>
+          </div>
+          <div class="row">
+
+            <!-- Projeto Real: GuzerTech -->
+            <div class="portfolio-item padd-15" data-category="web-development">
+              <div class="portfolio-item-inner client-project shadow-dark">
+                <div class="portfolio-img">
+                  <img src="images/portfolio/guzertech.png" alt="GuzerTech">
+                </div>
+                <div class="portfolio-info">
+                  <h4>GuzerTech</h4>
+                  <p>Minha empresa de criação de websites premium para marcas que querem parecer maiores e vender
+                    mais.</p>
+                  <div class="icon-link">
+                    <i class="fa fa-arrow-up-right-from-square"></i>
+                  </div>
+                </div>
+                <a href="https://guzer-tech.vercel.app/" target="_blank" rel="noopener noreferrer"
+                  class="client-project-overlay" aria-label="Abrir site da GuzerTech"></a>
+              </div>
+            </div>
+            <!-- Fim Projeto Real: GuzerTech -->
+
+            <!-- Projeto Real: Real Madruga FC -->
+            <div class="portfolio-item padd-15" data-category="web-development">
+              <div class="portfolio-item-inner client-project shadow-dark">
+                <div class="portfolio-img">
+                  <img src="images/portfolio/Real-Madruga.png" alt="Real Madruga FC">
+                </div>
+                <div class="portfolio-info">
+                  <h4>Real Madruga FC</h4>
+                  <p>Site institucional do clube de futebol amador (Fut7) de Blumenau/SC, com próximos jogos,
+                    resultados e estatísticas.</p>
+                  <div class="icon-link">
+                    <i class="fa fa-arrow-up-right-from-square"></i>
+                  </div>
+                </div>
+                <a href="https://realmadrugafc.com.br/" target="_blank" rel="noopener noreferrer"
+                  class="client-project-overlay" aria-label="Abrir site do Real Madruga FC"></a>
+              </div>
+            </div>
+            <!-- Fim Projeto Real: Real Madruga FC -->
+
+            <!-- Projeto Real: The Family's -->
+            <div class="portfolio-item padd-15" data-category="web-development">
+              <div class="portfolio-item-inner client-project shadow-dark">
+                <div class="portfolio-img">
+                  <img src="images/portfolio/the-famillys.png" alt="The Family's">
+                </div>
+                <div class="portfolio-info">
+                  <h4>The Family's</h4>
+                  <p>🏆 Eleita a melhor hamburgueria 2024. Burgers 100% Angus, Pizzas & Milkshakes.</p>
+                  <div class="icon-link">
+                    <i class="fa fa-arrow-up-right-from-square"></i>
+                  </div>
+                </div>
+                <a href="https://www.thefamilys.com.br/" target="_blank" rel="noopener noreferrer"
+                  class="client-project-overlay" aria-label="Abrir site do The Family's"></a>
+              </div>
+            </div>
+            <!-- Fim Projeto Real: The Family's -->
+          </div>
+        </div>
+      </section>
+      <!-- Fim da Seção Portfolio -->
+
+      <!-- Seção Contato -->
+      <section class="contact section" id="contact">
+        <div class="container">
+          <div class="row">
+            <div class="section-title padd-15">
+              <h2>Contato</h2>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="contact-info-item padd-15">
+              <div class="icon">
+                <i class="fa fa-phone"></i>
+                <h4>Celular</h4>
+                <p>+55 (47) 99172-5626</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item padd-15">
+              <div class="icon">
+                <i class="fa fa-map-marker"></i>
+                <h4>Local</h4>
+                <p>Blumenau, Brasil</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item padd-15">
+              <div class="icon">
+                <i class="fa fa-envelope"></i>
+                <h4>Email</h4>
+                <p>gustavocs.dev@gmail.com</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulário -->
+          <div class="row">
+            <form id="contactForm" class="contact-form padd-15" novalidate>
+              <div class="row">
+                <div class="form-item col-6 padd-15">
+                  <div class="form-group">
+                    <input type="text" name="nome" id="inputNome" class="form-control" placeholder="Nome*" required>
+                    <div class="field-error" id="errorNome">Por favor, informe seu nome.</div>
+                  </div>
+                </div>
+                <div class="form-item col-6 padd-15">
+                  <div class="form-group">
+                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email*"
+                      required>
+                    <div class="field-error" id="errorEmail">Informe um email válido (ex: nome@gmail.com).</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-item col-12 padd-15">
+                  <div class="form-group">
+                    <input type="text" name="assunto" id="inputAssunto" class="form-control" placeholder="Assunto*"
+                      required>
+                    <div class="field-error" id="errorAssunto">Por favor, informe o assunto.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-item col-12 padd-15">
+                  <div class="form-group">
+                    <textarea class="form-control" name="mensagem" id="inputMensagem"
+                      placeholder="Sua mensagem..." required></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 padd-15">
+                  <div class="send-options">
+                    <button type="button" id="btnEnviarEmail" class="btn">
+                      <i class="fa fa-envelope"></i> Enviar por Email
+                    </button>
+                    <button type="button" id="btnEnviarWhatsapp" class="btn">
+                      <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <!-- Fim do Conteúdo Principal -->
+  </div>
+  <!-- Fim do Container Principal -->
+
+  <!-- Lightbox -->
+  <div class="lightbox">
+    <div class="lightbox-content">
+      <div class="lightbox-close">&times;</div>
+      <img src="" alt="" onclick="nextItem()" class="lightbox-img">
+      <div class="lightbox-caption">
+        <div class="caption-text"></div>
+        <div class="caption-counter"></div>
+      </div>
+    </div>
+    <div class="lightbox-controls">
+      <div class="prev-item" onclick="prevItem()"><i class="fa fa-angle-left"></i></div>
+      <div class="next-item" onclick="nextItem()"><i class="fa fa-angle-right"></i></div>
+    </div>
+  </div>
+  <!-- Fim do Lightbox -->
+
+  <!-- Alternador de Estilos em Tempo Real - Apenas Demo -->
+  <div class="style-switcher">
+    <div class="toggle-style-switcher">
+      <i class="fa fa-cog fa-spin"></i>
+    </div>
+    <h5>Alterar estilo</h5>
+    <ul>
+      <li><a href="javascript:void(0);" title="pink" style="background-color: #ec1839;"
+          onclick="setActiveStyle('pink')"></a></li>
+      <li><a href="javascript:void(0);" title="blue" style="background-color: #2196f3;"
+          onclick="setActiveStyle('blue')"></a></li>
+      <li><a href="javascript:void(0);" title="orange" style="background-color: #fa5b0f;"
+          onclick="setActiveStyle('orange')"></a></li>
+      <li><a href="javascript:void(0);" title="yellow" style="background-color: #ffb400;"
+          onclick="setActiveStyle('yellow')"></a></li>
+      <li><a href="javascript:void(0);" title="green" style="background-color: #72b626;"
+          onclick="setActiveStyle('green')"></a></li>
+    </ul>
+    <h5>Tema</h5>
+    <label>
+      <input type="radio" class="body-skin" name="body-skin" value="light" checked="true"> Claro
+    </label>
+    <label>
+      <input type="radio" class="body-skin" name="body-skin" value="dark"> Escuro
+    </label>
+  </div>
+  <!-- Fim do Alternador de Estilos em Tempo Real -->
+
+  <!-- Plugins -->
+  <script src="js/ityped.min.js"></script>
+  <!-- Template JavaScript -->
+  <script src="js/script.js"></script>
+  <!-- JavaScript do Alternador de Estilos - Apenas Demo -->
+  <script src="js/styleSwitcher.js"></script>
+
+  <!-- Script customizado: Contrate-me + Validação + Envio + Fix do link de portfólio -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+      document.querySelectorAll('.client-project-overlay').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.stopPropagation();
+        });
+      });
+
+      var hireMeBtn = document.getElementById('hireMeBtn');
+      if (hireMeBtn) {
+        hireMeBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          var contactNavLink = document.querySelector('.aside .nav a[href="#contact"]');
+          if (contactNavLink) {
+            contactNavLink.click();
+          } else {
+            window.location.hash = '#contact';
+          }
+          document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+
+      function limparErros() {
+        document.querySelectorAll('.field-error').forEach(function (el) { el.classList.remove('show'); });
+        document.querySelectorAll('.form-control').forEach(function (el) { el.classList.remove('is-invalid'); });
+      }
+
+      function mostrarErro(inputId, errorId) {
+        document.getElementById(inputId).classList.add('is-invalid');
+        document.getElementById(errorId).classList.add('show');
+      }
+
+      function validarFormulario() {
+        limparErros();
+        var nome = document.getElementById('inputNome').value.trim();
+        var email = document.getElementById('inputEmail').value.trim();
+        var assunto = document.getElementById('inputAssunto').value.trim();
+        var mensagem = document.getElementById('inputMensagem').value.trim();
+        var valido = true;
+
+        if (!nome) {
+          mostrarErro('inputNome', 'errorNome');
+          valido = false;
+        }
+        if (!assunto) {
+          mostrarErro('inputAssunto', 'errorAssunto');
+          valido = false;
+        }
+        if (!email || !emailRegex.test(email)) {
+          mostrarErro('inputEmail', 'errorEmail');
+          valido = false;
+        }
+
+        if (!valido) return null;
+        return { nome: nome, email: email, assunto: assunto, mensagem: mensagem };
+      }
+
+      var MEU_EMAIL = 'gustavocs.dev@gmail.com';
+      var MEU_WHATSAPP = '5547991725626';
+
+      document.getElementById('btnEnviarEmail').addEventListener('click', function () {
+        var dados = validarFormulario();
+        if (!dados) return;
+        var corpo = 'Nome: ' + dados.nome + '\nEmail: ' + dados.email + '\n\n' + dados.mensagem;
+        var link = 'mailto:' + MEU_EMAIL + '?subject=' + encodeURIComponent(dados.assunto) +
+          '&body=' + encodeURIComponent(corpo);
+        window.location.href = link;
+      });
+
+      document.getElementById('btnEnviarWhatsapp').addEventListener('click', function () {
+        var dados = validarFormulario();
+        if (!dados) return;
+        var texto = 'Olá, Gustavo! Meu nome é ' + dados.nome +
+          '.\nEmail: ' + dados.email +
+          '\nAssunto: ' + dados.assunto +
+          '\n\nMensagem: ' + dados.mensagem;
+        var link = 'https://wa.me/' + MEU_WHATSAPP + '?text=' + encodeURIComponent(texto);
+        window.open(link, '_blank');
+      });
+    });
+  </script>
+</body>
+
+</html>
